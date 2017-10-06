@@ -1,12 +1,11 @@
 var fs = require("fs");
 var request = require("request");
-
-var twitterKeys = require("./key.js");
+var keys = require("./key.js");
 var twitter = require("twitter");
-
 var Spotify = require('node-spotify-api');
-var spotifyClientId = "3e38f5eff4b64b0d937da1004cc2060b";
-var spotifyClientSecret = "5c59607d5637415a8e3629439372fe2f";
+
+var twitterKeys = keys.twitterKeys;
+var spotifyKeys = keys.spotifyKeys;
 
 var nodeArgs = process.argv;
 var action = process.argv[2];
@@ -41,13 +40,10 @@ function myTweets() {
 
 function spotifyThisSong(query) {
 
-	var spotify = new Spotify({
-	  id: spotifyClientId,
-	  secret: spotifyClientSecret
-	});
+	var spotify = new Spotify(spotifyKeys);
 
 	if (query === "") {
-		spotify.search({ type: 'track', query: "ace of base" }, function(err, data) {
+		spotify.search({ type: 'track', query: "the sign" }, function(err, data) {
 		console.log(data);
 		})
 	} else {
