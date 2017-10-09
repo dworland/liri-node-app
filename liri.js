@@ -25,7 +25,6 @@ function myTweets() {
 	 
 	var params = {screen_name: 'DW_UTclass2017'};
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
-		console.log(params);
 	  if (!error) {
 	  	for (i = 0; i < 20; i++) {
 	  		console.log("DW_UTclass2017: " + tweets[i].text);
@@ -38,13 +37,16 @@ function myTweets() {
 }
 
 
-function spotifyThisSong(query) {
+function spotifyThisSong() {
 
 	var spotify = new Spotify(spotifyKeys);
 
 	if (query === "") {
-		spotify.search({ type: 'track', query: "the sign" }, function(err, data) {
-		console.log(data);
+		spotify.search({ type: 'track', query: "the sign ace" }, function(err, data) {
+			console.log("Artist: " + data.tracks.items[0].album.artists[0].name);
+			console.log("Song: " + data.tracks.items[0].name);
+        	console.log("Link: " + data.tracks.items[0].external_urls.spotify); 
+        	console.log("Album: " + data.tracks.items[0].album.name);
 		})
 	} else {
 		spotify.search({ type: 'track', query: query }, function(err, data) {
@@ -52,7 +54,10 @@ function spotifyThisSong(query) {
 			if (err) {
 				return console.log("Error occured: " + err);
 			}
-			console.log(data);
+			console.log("Artist: " + data.tracks.items[0].album.artists[0].name);
+			console.log("Song: " + data.tracks.items[0].name);
+        	console.log("Link: " + data.tracks.items[0].external_urls.spotify); 
+        	console.log("Album: " + data.tracks.items[0].album.name);
 		})
 	} 
 
@@ -94,6 +99,8 @@ function movieThis() {
 
 
 function doWhatItSays() {
+	var doWhatISay = "do-what-it-says"
+
 	fs.readFile("random.txt", "utf8", function(error, data) {
 		if (error) {
 			return console.log(error);
@@ -101,13 +108,14 @@ function doWhatItSays() {
 
 		console.log(data);
 		var dataArr = data.split(",");
-		console.log(dataArr);
 
 		var doIt = dataArr[1].split();
+		var str = doIt.join();
 		console.log(doIt);
+		console.log(str);
 
-		if (action === "do-what-it-says") {
-			spotifyThisSong(doIt);
+		if (action === doWhatISay) {
+			spotifyThisSong(str);
 		} 
 
 	});
@@ -119,10 +127,10 @@ switch (action) {
 		myTweets();
 		break;
 	case "spotify-this-song":
-		spotifyThisSong(query);
+		spotifyThisSong();
 		break;
 	case "movie-this":
-		movieThis(query);
+		movieThis();
 		break;
 	case "do-what-it-says":
 		doWhatItSays();
