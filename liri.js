@@ -50,7 +50,6 @@ function spotifyThisSong() {
 		})
 	} else {
 		spotify.search({ type: 'track', query: query }, function(err, data) {
-			console.log(data);
 			if (err) {
 				return console.log("Error occured: " + err);
 			}
@@ -99,14 +98,14 @@ function movieThis() {
 
 
 function doWhatItSays() {
-	var doWhatISay = "do-what-it-says"
+	var doWhatISay = "do-what-it-says";
 
 	fs.readFile("random.txt", "utf8", function(error, data) {
 		if (error) {
 			return console.log(error);
 		}
-
 		console.log(data);
+
 		var dataArr = data.split(",");
 
 		var doIt = dataArr[1].split();
@@ -115,6 +114,7 @@ function doWhatItSays() {
 		console.log(str);
 
 		if (action === doWhatISay) {
+			query = str;
 			spotifyThisSong(str);
 		} 
 
